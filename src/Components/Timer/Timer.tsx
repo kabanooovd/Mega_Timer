@@ -1,61 +1,60 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React from "react";
 import s from './Timer.module.css'
+import {useDispatch, useSelector} from "react-redux";
+import {ReducersType} from "../../store/store";
+import {changeHrsAC, changeMinAC, changeSecAC, TimerStateType} from "../../reducers/timer-reducer";
 
 export const Timer = () => {
 
-    const [SS, setSS] = useState<number>(0)
-    const [MM, setMM] = useState<number>(0)
-    const [HH, setHH] = useState<number>(0)
+    const dispatch = useDispatch()
+
+    const S = useSelector<ReducersType, TimerStateType>(state => state.timer).SS_val
+    const M = useSelector<ReducersType, TimerStateType>(state => state.timer).MM_val
+    const H = useSelector<ReducersType, TimerStateType>(state => state.timer).HH_val
 
     const addZero = (num: number) => {
         return num <= 9 ? `0${num}` : num
     }
 
-    SS < 0 && setSS(59)
-    SS > 59 && setSS(0)
+    S < 0 && dispatch(changeSecAC(59))
+    S < 0 && dispatch(changeMinAC(M - 1))
+    S > 59 && dispatch(changeSecAC(0))
+    S > 59 && dispatch(changeMinAC(M + 1))
 
-    MM < 0 && setMM(59)
-    MM > 59 && setMM(0)
+    M < 0 && dispatch(changeMinAC(59))
+    M < 0 && dispatch(changeHrsAC(H - 1))
+    M > 59 && dispatch(changeMinAC(0))
+    M > 59 && dispatch(changeHrsAC(H + 1))
 
-    HH < 0 && setHH(23)
-    HH > 23 && setHH(0)
-
-
-    // useEffect(() => {
-    //     const timer = setInterval(() => {
-    //         setSS(SS + 1);
-    //     }, 200);
-    //     // clearing interval
-    //     return () => clearInterval(timer);
-    // });
-
+    H < 0 && dispatch(changeHrsAC(23))
+    H > 23 && dispatch(changeHrsAC(0))
 
     return (
         <div className={s.MainTimerContainer}>
             <div className={s.timerDisplay}>
                 <div className={s.buttonsUpBlock}>
                     <div className={s.plus} onClick={() => {
-                        setHH(HH + 1)
+                       dispatch(changeHrsAC(H + 1))
                     }}/>
                     <div className={s.plus} onClick={() => {
-                        setMM(MM + 1)
+                        dispatch(changeMinAC(M + 1))
                     }}/>
                     <div className={s.plus} onClick={() => {
-                        setSS(SS + 1)
+                        dispatch(changeSecAC(S + 1))
                     }}/>
                 </div>
 
-                <h1>{addZero(HH)} : {addZero(MM)} : {addZero(SS)}</h1>
+                <h1>{addZero(H)} : {addZero(M)} : {addZero(S)}</h1>
 
                 <div className={s.buttonsDownBlock}>
                     <div className={s.minus} onClick={() => {
-                        setHH(HH - 1)
+                        dispatch(changeHrsAC(H - 1))
                     }}/>
                     <div className={s.minus} onClick={() => {
-                        setMM(MM - 1)
+                        dispatch(changeMinAC(M - 1))
                     }}/>
                     <div className={s.minus} onClick={() => {
-                        setSS(SS - 1)
+                        dispatch(changeSecAC(S - 1))
                     }}/>
                 </div>
             </div>
