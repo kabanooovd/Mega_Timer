@@ -7,7 +7,7 @@ export type TimerStateType = {
 }
 
 const initState: TimerStateType = {
-    SS_val: 0,
+    SS_val: 5,
     MM_val: 0,
     HH_val: 0,
 }
