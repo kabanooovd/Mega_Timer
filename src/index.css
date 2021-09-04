@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  color: #a8a887;
+  background-image: url("https://kartinkin.com/uploads/posts/2021-01/1610891226_32-p-fon-s-gadzhetami-57.jpg");
 }
 
 code {
